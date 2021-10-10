@@ -58,10 +58,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define HX_PD_SCK_Pin GPIO_PIN_0
-#define HX_PD_SCK_GPIO_Port GPIOF
 #define HX_DOUT_Pin GPIO_PIN_1
 #define HX_DOUT_GPIO_Port GPIOF
+#define CMES_ENA_Pin GPIO_PIN_2
+#define CMES_ENA_GPIO_Port GPIOA
 #define M2_PWM_Pin GPIO_PIN_3
 #define M2_PWM_GPIO_Port GPIOA
 #define M2_INB_Pin GPIO_PIN_4
@@ -82,6 +82,8 @@ void Error_Handler(void);
 #define M1_INA_GPIO_Port GPIOA
 #define M1_ENA_Pin GPIO_PIN_10
 #define M1_ENA_GPIO_Port GPIOA
+#define M1_PWM_Pin GPIO_PIN_5
+#define M1_PWM_GPIO_Port GPIOB
 #define OLED_SCL_Pin GPIO_PIN_6
 #define OLED_SCL_GPIO_Port GPIOB
 #define OLED_SDA_Pin GPIO_PIN_7

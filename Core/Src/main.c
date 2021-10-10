@@ -99,14 +99,26 @@ int main(void)
   MX_TIM3_Init();
   MX_ADC1_Init();
   MX_CAN_Init();
-  MX_TIM1_Init();
   MX_USART2_UART_Init();
   MX_TIM16_Init();
+  MX_TIM17_Init();
   /* USER CODE BEGIN 2 */
 
   HAL_Delay(100);
   SSD1306_init();
   int d=0;
+  HAL_GPIO_WritePin( M2_INA_GPIO_Port,M2_INA_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(M2_INB_GPIO_Port,M2_INB_Pin, GPIO_PIN_RESET);
+
+  HAL_GPIO_WritePin( M1_INA_GPIO_Port,M1_INA_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(M1_INB_GPIO_Port,M1_INB_Pin, GPIO_PIN_RESET);
+
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
+
+  HAL_TIM_PWM_Start(&htim17, TIM_CHANNEL_1);
+
+  __HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_4,65534/2);
+  __HAL_TIM_SET_COMPARE(&htim17,TIM_CHANNEL_1,65534/2);
 
   /* USER CODE END 2 */
 
@@ -174,11 +186,9 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2C1|RCC_PERIPHCLK_TIM1
-                              |RCC_PERIPHCLK_ADC12;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2C1|RCC_PERIPHCLK_ADC12;
   PeriphClkInit.Adc12ClockSelection = RCC_ADC12PLLCLK_DIV1;
   PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_HSI;
-  PeriphClkInit.Tim1ClockSelection = RCC_TIM1CLK_HCLK;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
