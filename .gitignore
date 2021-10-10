@@ -1,0 +1,10 @@
+
+Drivers/
+*.ioc
+*.launch
+*.ld
+.settings/
+/.mxproject
+/.cproject
+/.project
+Core/Startup/
