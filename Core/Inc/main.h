@@ -58,6 +58,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define HX_PD_SCK_Pin GPIO_PIN_0
+#define HX_PD_SCK_GPIO_Port GPIOF
 #define HX_DOUT_Pin GPIO_PIN_1
 #define HX_DOUT_GPIO_Port GPIOF
 #define CMES_ENA_Pin GPIO_PIN_2

@@ -34,7 +34,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/can.h ../Core/Inc/dma.h \
  ../Core/Inc/i2c.h ../Core/Inc/tim.h ../Core/Inc/usart.h \
  ../Core/Inc/gpio.h ../Core/Inc/GFX.h ../Core/Inc/SSD1306.h \
- ../Core/Inc/SSD1306.h
+ ../Core/Inc/SSD1306.h ../Core/Inc/gui.h
 
 ../Core/Inc/main.h:
 
@@ -123,3 +123,5 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/SSD1306.h:
 
 ../Core/Inc/SSD1306.h:
+
+../Core/Inc/gui.h:

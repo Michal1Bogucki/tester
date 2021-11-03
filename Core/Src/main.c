@@ -29,9 +29,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
 #include "GFX.h"
 #include "SSD1306.h"
-
+#include "gui.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -107,22 +108,30 @@ int main(void)
 
   HAL_Delay(100);
   SSD1306_init();
-  int d=0;
-  HAL_GPIO_WritePin( M2_INA_GPIO_Port,M2_INA_Pin, GPIO_PIN_SET);
+
+  HAL_GPIO_WritePin(M2_ENA_GPIO_Port,M2_ENA_Pin,GPIO_PIN_SET);
+  HAL_GPIO_WritePin(M1_ENA_GPIO_Port,M1_ENA_Pin, GPIO_PIN_SET);
+
+  HAL_GPIO_WritePin( M2_INA_GPIO_Port,M2_INA_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(M2_INB_GPIO_Port,M2_INB_Pin, GPIO_PIN_RESET);
 
-  HAL_GPIO_WritePin( M1_INA_GPIO_Port,M1_INA_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin( M1_INA_GPIO_Port,M1_INA_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(M1_INB_GPIO_Port,M1_INB_Pin, GPIO_PIN_RESET);
 
   HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
 
   HAL_TIM_PWM_Start(&htim17, TIM_CHANNEL_1);
 
-  __HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_4,65534/2);
-  __HAL_TIM_SET_COMPARE(&htim17,TIM_CHANNEL_1,65534/2);
+  __HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_4,0);
+  __HAL_TIM_SET_COMPARE(&htim17,TIM_CHANNEL_1,0);
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
+  HAL_Delay(1000);
 
+  GUI_STARTSCREAN_DRAW();
 
+  SSD1306_display_repaint();
+  SSD1306_start_scroll_right(1, 50);
+  HAL_Delay(1500);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -132,23 +141,25 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  da=__HAL_TIM_GET_COMPARE(&htim3,TIM_CHANNEL_1);
+	  //da=__HAL_TIM_GET_COMPARE(&htim3,TIM_CHANNEL_1);
 	  db= __HAL_TIM_GET_COUNTER(&htim3);
-	  HAL_Delay(1000);
-	  SSD1306_display_clear();
-
-
-	  SSD1306_draw_fast_hline(1, 1, d, SSD1306_INVERSE);
-	  HAL_Delay(500);
-	  d++;
-	  if (d>(8)) d=0;
-
-
-	  SSD1306_display_repaint();
+	  if (db<0)  db=0 ;
+	  __HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_4,db*100);
+	  HAL_Delay(2500);
 
 
 
+	  HAL_GPIO_WritePin( M2_INA_GPIO_Port,M2_INA_Pin, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(M2_INB_GPIO_Port,M2_INB_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin( M1_INA_GPIO_Port,M1_INA_Pin, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin(M1_INB_GPIO_Port,M1_INB_Pin, GPIO_PIN_SET);
 
+/*	  HAL_Delay(2500);
+
+	  HAL_GPIO_WritePin( M2_INA_GPIO_Port,M2_INA_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(M2_INB_GPIO_Port,M2_INB_Pin, GPIO_PIN_RESET);
+	  HAL_GPIO_WritePin( M1_INA_GPIO_Port,M1_INA_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(M1_INB_GPIO_Port,M1_INB_Pin, GPIO_PIN_RESET);*/
 
 
   }

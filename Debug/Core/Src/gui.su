@@ -1,0 +1,2 @@
+gui.c:15:6:GUI_INIT	16	static
+gui.c:21:6:GUI_STARTSCREAN_DRAW	4	static
