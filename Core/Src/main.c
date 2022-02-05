@@ -55,6 +55,8 @@
 volatile  char a[]="sss";
 uint32_t da;
 uint32_t db;
+
+uint32_t adc_dma_buffer[2];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -104,10 +106,14 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM17_Init();
   MX_TIM2_Init();
+
   /* USER CODE BEGIN 2 */
 
+  HAL_ADCEx_Calibration_Start(&hadc1,ADC_SINGLE_ENDED);
+
+
   HAL_Delay(100);
-  SSD1306_init();
+
 
   HAL_GPIO_WritePin(M2_ENA_GPIO_Port,M2_ENA_Pin,GPIO_PIN_SET);
   HAL_GPIO_WritePin(M1_ENA_GPIO_Port,M1_ENA_Pin, GPIO_PIN_SET);
@@ -124,18 +130,24 @@ int main(void)
 
   __HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_4,0);
   __HAL_TIM_SET_COMPARE(&htim17,TIM_CHANNEL_1,0);
+
+
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
   HAL_Delay(1000);
 
-  GUI_STARTSCREAN_DRAW();
 
-  SSD1306_display_repaint();
-  SSD1306_start_scroll_right(1, 50);
+  HAL_Delay(1000);
+
   HAL_Delay(1500);
+  HAL_ADC_Start_DMA(&hadc1,adc_dma_buffer,2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  HAL_GPIO_WritePin( M2_INA_GPIO_Port,M2_INA_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(M2_INB_GPIO_Port,M2_INB_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin( M1_INA_GPIO_Port,M1_INA_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(M1_INB_GPIO_Port,M1_INB_Pin, GPIO_PIN_SET);
   while (1)
   {
     /* USER CODE END WHILE */
@@ -143,23 +155,15 @@ int main(void)
     /* USER CODE BEGIN 3 */
 	  //da=__HAL_TIM_GET_COMPARE(&htim3,TIM_CHANNEL_1);
 	  db= __HAL_TIM_GET_COUNTER(&htim3);
-	  if (db<0)  db=0 ;
-	  __HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_4,db*100);
-	  HAL_Delay(2500);
+	  if (db<0)  db=0;
+	  {
+	  __HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_4,db*1);
+
+	  }
 
 
 
-	  HAL_GPIO_WritePin( M2_INA_GPIO_Port,M2_INA_Pin, GPIO_PIN_RESET);
-	  HAL_GPIO_WritePin(M2_INB_GPIO_Port,M2_INB_Pin, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin( M1_INA_GPIO_Port,M1_INA_Pin, GPIO_PIN_RESET);
-	  HAL_GPIO_WritePin(M1_INB_GPIO_Port,M1_INB_Pin, GPIO_PIN_SET);
 
-/*	  HAL_Delay(2500);
-
-	  HAL_GPIO_WritePin( M2_INA_GPIO_Port,M2_INA_Pin, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(M2_INB_GPIO_Port,M2_INB_Pin, GPIO_PIN_RESET);
-	  HAL_GPIO_WritePin( M1_INA_GPIO_Port,M1_INA_Pin, GPIO_PIN_SET);
-	  HAL_GPIO_WritePin(M1_INB_GPIO_Port,M1_INB_Pin, GPIO_PIN_RESET);*/
 
 
   }

@@ -7,31 +7,28 @@
 
 #include "VNH5019_DRV.h"
 
+/*
+ * TO DO
+ *
+ *
+ *
+ */
 
 void VNH_Init(VNH_HANDLE* hVNH){
 
 	if(hVNH==NULL){
 		return;
 	}
+	// Start PWM
+	HAL_TIMEx_PWMN_Start(hVNH->PWM_sig.timh,hVNH->PWM_sig.Chanel);
+	VNH_SetPWM(hVNH,0);
 
 	VNH_SetDirLL(hVNH);
-	VNH_SetPWM(hVNH,0);
-	VNH_ResetRamp(hVNH);
-
-
+	VNH_DisableCurSens(hVNH);
 
 }
 
-
-
-
-
-
-
-
 void VNH_SetDirHL(VNH_HANDLE*  hVNH){
-
-
 	HAL_GPIO_WritePin(hVNH->MA_sig.gpioport, hVNH->MA_sig.gpiopin, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(hVNH->MB_sig.gpioport, hVNH->MB_sig.gpiopin, GPIO_PIN_SET);
 	hVNH->dir=dir_HL;
@@ -39,32 +36,22 @@ void VNH_SetDirHL(VNH_HANDLE*  hVNH){
 }
 
 void VNH_SetDirLH(VNH_HANDLE*  hVNH){
-
-
 	HAL_GPIO_WritePin(hVNH->MA_sig.gpioport, hVNH->MA_sig.gpiopin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(hVNH->MB_sig.gpioport, hVNH->MB_sig.gpiopin, GPIO_PIN_RESET);
 	hVNH->dir=dir_LH;
-
 }
 
-
-
 void VNH_SetDirHH(VNH_HANDLE*  hVNH){
-
 	HAL_GPIO_WritePin(hVNH->MA_sig.gpioport, hVNH->MA_sig.gpiopin, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(hVNH->MB_sig.gpioport, hVNH->MB_sig.gpiopin, GPIO_PIN_SET);
 	hVNH->dir=dir_HH;
 }
-
-
-
 
 void VNH_SetDirLL(VNH_HANDLE*  hVNH){
 
 	HAL_GPIO_WritePin(hVNH->MA_sig.gpioport, hVNH->MA_sig.gpiopin, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(hVNH->MB_sig.gpioport, hVNH->MB_sig.gpiopin, GPIO_PIN_RESET);
 	hVNH->dir=dir_LL;
-
 }
 
 void VNH_TogleDir(VNH_HANDLE* hVNH){
@@ -98,27 +85,23 @@ void VNH_SetDir(VNH_HANDLE* hVNH ,VNH_dir dir){
 	}
 }
 
-
-
 void VNH_SetPWM(VNH_HANDLE* hVNH, uint8_t duty){
+
 	hVNH->PWM_dutycicle=duty;
 	 __HAL_TIM_SET_COMPARE(hVNH->PWM_sig.timh,hVNH->PWM_sig.Chanel,__HAL_TIM_GET_AUTORELOAD(hVNH->PWM_sig.timh)*duty/0xff);
 }
 
-void VNH_SetRamp(VNH_HANDLE* hVNH, uint8_t target,uint32_t time){
+void VNH_DisableCurSens(VNH_HANDLE* hVNH){
 
-	int32_t delta= target-hVNH->PWM_dutycicle;
-
-
-
-	hVNH->ramp_delta=delta/time;
-	hVNH->ramp_steps=255;
+	HAL_GPIO_WritePin(hVNH->CS_dis_sig.gpioport,hVNH->CS_dis_sig.gpiopin,GPIO_PIN_SET);
 }
 
+void VNH_EnableCurSens(VNH_HANDLE* hVNH){
 
+	HAL_GPIO_WritePin(hVNH->CS_dis_sig.gpioport,hVNH->CS_dis_sig.gpiopin,GPIO_PIN_RESET);
+}
 
-void VNH_ResetRamp(VNH_HANDLE* hVNH){
-	hVNH->ramp_delta=0;
-	hVNH->ramp_curentstep=0;
-	hVNH->ramp_steps=0;
+uint32_t VNH_GetCurValue(VNH_HANDLE* hVNH){
+
+	return (uint32_t)(*hVNH->CS_sig/hVNH->CS_Rez_Val);
 }

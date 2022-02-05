@@ -1,5 +1,6 @@
 "Core/Src/GFX.o"
 "Core/Src/SSD1306.o"
+"Core/Src/VNH5019_DRV.o"
 "Core/Src/adc.o"
 "Core/Src/can.o"
 "Core/Src/dma.o"

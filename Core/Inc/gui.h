@@ -9,6 +9,7 @@
 #define INC_GUI_H_
 
 #include <stdint.h>
+#include <stdio.h>
 typedef enum {
 	GUI_STATE_START,
 	GUI_STATE_IDLE
@@ -38,7 +39,7 @@ void GUI_EVENT_HANDLE(GUI_Handle*);
 
 
 void GUI_STARTSCREAN_DRAW(void);
-
+void GUI_NUBER_PRINT(uint32_t);
 
 
 

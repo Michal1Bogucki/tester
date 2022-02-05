@@ -1,2 +1,3 @@
 gui.c:15:6:GUI_INIT	16	static
 gui.c:21:6:GUI_STARTSCREAN_DRAW	4	static
+gui.c:30:6:GUI_NUBER_PRINT	16	static

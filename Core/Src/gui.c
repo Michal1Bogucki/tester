@@ -26,3 +26,15 @@ void GUI_STARTSCREAN_DRAW(void){
 
 	#endif
 }
+
+void GUI_NUBER_PRINT(uint32_t num){
+
+#ifndef DEBUG
+	char ch[10];
+	sprintf(ch,"%u",(unsigned int)num);
+
+	GFX_draw_string(20, 40, (unsigned char*)ch, SSD1306_BLACK, SSD1306_WHITE, 2, 2);
+
+
+#endif
+}
