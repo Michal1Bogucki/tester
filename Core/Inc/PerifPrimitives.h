@@ -14,7 +14,8 @@ typedef struct{
 }PRIM_IOPIN;
 
 typedef struct{
-	uint16_t t;
+	// TO DO delete this shit
+	ADC_HandleTypeDef adc;
 
 }PRIM_ADC;
 

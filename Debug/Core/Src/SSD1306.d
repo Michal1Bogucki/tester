@@ -30,7 +30,9 @@ Core/Src/SSD1306.o: ../Core/Src/SSD1306.c ../Core/Inc/SSD1306.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h \
- ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h
+ ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h \
+ ../Core/Inc/VNH5019_DRV.h ../Core/Inc/PerifPrimitives.h \
+ ../Core/Inc/GFX.h ../Core/Inc/SSD1306.h
 
 ../Core/Inc/SSD1306.h:
 
@@ -99,3 +101,11 @@ Core/Src/SSD1306.o: ../Core/Src/SSD1306.c ../Core/Inc/SSD1306.h \
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h:
 
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h:
+
+../Core/Inc/VNH5019_DRV.h:
+
+../Core/Inc/PerifPrimitives.h:
+
+../Core/Inc/GFX.h:
+
+../Core/Inc/SSD1306.h:

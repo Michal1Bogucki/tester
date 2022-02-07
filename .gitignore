@@ -12,3 +12,4 @@ Core/Startup/
 *.bin
 *.elf
 *.su
+*.d

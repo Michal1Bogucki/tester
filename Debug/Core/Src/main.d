@@ -31,10 +31,11 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h \
- ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/can.h ../Core/Inc/dma.h \
- ../Core/Inc/i2c.h ../Core/Inc/tim.h ../Core/Inc/usart.h \
- ../Core/Inc/gpio.h ../Core/Inc/GFX.h ../Core/Inc/SSD1306.h \
- ../Core/Inc/SSD1306.h ../Core/Inc/gui.h
+ ../Core/Inc/VNH5019_DRV.h ../Core/Inc/PerifPrimitives.h \
+ ../Core/Inc/GFX.h ../Core/Inc/SSD1306.h ../Core/Inc/adc.h \
+ ../Core/Inc/main.h ../Core/Inc/can.h ../Core/Inc/dma.h ../Core/Inc/i2c.h \
+ ../Core/Inc/tim.h ../Core/Inc/usart.h ../Core/Inc/gpio.h \
+ ../Core/Inc/gui.h ../Core/Inc/VNH.h ../Core/Inc/adc.h ../Core/Inc/tim.h
 
 ../Core/Inc/main.h:
 
@@ -102,6 +103,14 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h:
 
+../Core/Inc/VNH5019_DRV.h:
+
+../Core/Inc/PerifPrimitives.h:
+
+../Core/Inc/GFX.h:
+
+../Core/Inc/SSD1306.h:
+
 ../Core/Inc/adc.h:
 
 ../Core/Inc/main.h:
@@ -118,10 +127,10 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 
 ../Core/Inc/gpio.h:
 
-../Core/Inc/GFX.h:
-
-../Core/Inc/SSD1306.h:
-
-../Core/Inc/SSD1306.h:
-
 ../Core/Inc/gui.h:
+
+../Core/Inc/VNH.h:
+
+../Core/Inc/adc.h:
+
+../Core/Inc/tim.h:

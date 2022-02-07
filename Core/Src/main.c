@@ -30,9 +30,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
-#include "GFX.h"
-#include "SSD1306.h"
+
+
 #include "gui.h"
+#include "VNH.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,7 +57,7 @@ volatile  char a[]="sss";
 uint32_t da;
 uint32_t db;
 
-uint32_t adc_dma_buffer[2];
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

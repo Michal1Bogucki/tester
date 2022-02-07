@@ -32,6 +32,9 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "VNH5019_DRV.h"
+#include "GFX.h"
+#include "SSD1306.h"
 
 /* USER CODE END Includes */
 

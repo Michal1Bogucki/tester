@@ -20,13 +20,26 @@ void VNH_Init(VNH_HANDLE* hVNH){
 		return;
 	}
 	// Start PWM
-	HAL_TIMEx_PWMN_Start(hVNH->PWM_sig.timh,hVNH->PWM_sig.Chanel);
+	VNH_DisableCurSens(hVNH);
+	VNH_Disable(hVNH);
+	HAL_TIM_PWM_Start(hVNH->PWM_sig.timh,hVNH->PWM_sig.Chanel);
 	VNH_SetPWM(hVNH,0);
 
 	VNH_SetDirLL(hVNH);
-	VNH_DisableCurSens(hVNH);
+
+
+
 
 }
+
+void VNH_Disable(VNH_HANDLE* hVNH){
+	HAL_GPIO_WritePin(hVNH->ENA_sig.gpioport, hVNH->ENA_sig.gpiopin, GPIO_PIN_RESET);
+}
+
+void VNH_Enable(VNH_HANDLE* hVNH){
+	HAL_GPIO_WritePin(hVNH->ENA_sig.gpioport, hVNH->ENA_sig.gpiopin, GPIO_PIN_RESET);
+}
+
 
 void VNH_SetDirHL(VNH_HANDLE*  hVNH){
 	HAL_GPIO_WritePin(hVNH->MA_sig.gpioport, hVNH->MA_sig.gpiopin, GPIO_PIN_RESET);

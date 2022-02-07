@@ -20,8 +20,11 @@ typedef struct{
 PRIM_PWM PWM_sig;
 PRIM_IOPIN MA_sig;
 PRIM_IOPIN MB_sig;
+PRIM_IOPIN ENA_sig;
 PRIM_IOPIN CS_dis_sig;
+//ADC_HandleTypeDef* CS_ADC_handler;
 uint32_t* CS_sig; //pointer to adc value
+//uint8_t CS_ADC_chanel;
 uint16_t CS_Rez_Val;
 VNH_dir dir;
 
@@ -31,6 +34,9 @@ uint8_t PWM_dutycicle;
 
 void VNH_Init(VNH_HANDLE*);
 
+void VNH_Enable(VNH_HANDLE*);
+void VNH_Disable(VNH_HANDLE*);
+
 void VNH_SetDirHL(VNH_HANDLE*);
 void VNH_SetDirLH(VNH_HANDLE*);
 
@@ -39,6 +45,7 @@ void VNH_SetDirLL(VNH_HANDLE*);
 void VNH_TogleDir(VNH_HANDLE*);
 
 void VNH_SetDir(VNH_HANDLE*,VNH_dir);
+
 
 
 void VNH_SetPWM(VNH_HANDLE*, uint8_t);
