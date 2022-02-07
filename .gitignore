@@ -8,3 +8,7 @@ Drivers/
 /.cproject
 /.project
 Core/Startup/
+*.o
+*.bin
+*.elf
+*.su
