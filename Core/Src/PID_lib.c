@@ -1,7 +1,38 @@
 #include "PID_lib"
 
+enum pid_control_directions {
+	E_PID_DIRECT,
+	E_PID_REVERSE,
+};
 
-pid_t pid_create(pid_t pid, float* in, float* out, float* set, float kp, float ki, float kd)
+/**
+ * Structure that holds PID all the PID controller data, multiple instances are
+ * posible using different structures for each controller
+ */
+typedef struct {
+	// Input, output and setpoint
+	float * input; //!< Current Process Value
+	float * output; //!< Corrective Output from PID Controller
+	float * setpoint; //!< Controller Setpoint
+	// Tuning parameters
+	float Kp; //!< Stores the gain for the Proportional term
+	float Ki; //!< Stores the gain for the Integral term
+	float Kd; //!< Stores the gain for the Derivative term
+	// Output minimum and maximum values
+	float omin; //!< Maximum value allowed at the output
+	float omax; //!< Minimum value allowed at the output
+	// Variables for PID algorithm
+	float iterm; //!< Accumulator for integral term
+	float lastin; //!< Last input value for differential term
+	// Time related
+	uint32_t lasttime; //!< Stores the time when the control loop ran last time
+	uint32_t sampletime; //!< Defines the PID sample time
+	// Operation mode
+	uint8_t automode; //!< Defines if the PID controller is enabled or disabled
+	enum pid_control_directions direction;
+}PID_handler;
+
+void pid_init(PID_handler* pid, float* in, float* out, float* set, float kp, float ki, float kd)
 {
 	pid->input = in;
 	pid->output = out;
@@ -18,16 +49,15 @@ pid_t pid_create(pid_t pid, float* in, float* out, float* set, float kp, float k
 
 	pid->lasttime = tick_get() - pid->sampletime;
 
-	return pid;
-}
+	
 
-bool pid_need_compute(pid_t pid)
+bool pid_need_compute(PID_handler* pid)
 {
 	// Check if the PID period has elapsed
 	return(tick_get() - pid->lasttime >= pid->sampletime) ? true : false;
 }
 
-void pid_compute(pid_t pid)
+void pid_compute(PID_handler* pid)
 {
 	// Check if control is enabled
 	if (!pid->automode)
@@ -58,7 +88,7 @@ void pid_compute(pid_t pid)
 	pid->lasttime = tick_get();;
 }
 
-void pid_tune(pid_t pid, float kp, float ki, float kd)
+void pid_tune(PID_handler* pid, float kp, float ki, float kd)
 {
 	// Check for validity
 	if (kp < 0 || ki < 0 || kd < 0)
@@ -78,7 +108,7 @@ void pid_tune(pid_t pid, float kp, float ki, float kd)
 	}
 }
 
-void pid_sample(pid_t pid, uint32_t time)
+void pid_sample(PID_handler* pid, uint32_t time)
 {
 	if (time > 0) {
 		float ratio = (float) (time * (TICK_SECOND / 1000)) / (float) pid->sampletime;
@@ -88,7 +118,7 @@ void pid_sample(pid_t pid, uint32_t time)
 	}
 }
 
-void pid_limits(pid_t pid, float min, float max)
+void pid_limits(PID_handler* pid, float min, float max)
 {
 	if (min >= max) return;
 	pid->omin = min;
@@ -107,7 +137,7 @@ void pid_limits(pid_t pid, float min, float max)
 	}
 }
 
-void pid_auto(pid_t pid)
+void pid_auto(PID_handler* pid)
 {
 	// If going from manual to auto
 	if (!pid->automode) {
@@ -121,12 +151,12 @@ void pid_auto(pid_t pid)
 	}
 }
 
-void pid_manual(pid_t pid)
+void pid_manual(PID_handler* pid)
 {
 	pid->automode = false;
 }
 
-void pid_direction(pid_t pid, enum pid_control_directions dir)
+void pid_direction(PID_handler* pid, enum pid_control_directions dir)
 {
 	if (pid->automode && pid->direction != dir) {
 		pid->Kp = (0 - pid->Kp);
