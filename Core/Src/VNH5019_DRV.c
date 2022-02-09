@@ -114,7 +114,7 @@ void VNH_EnableCurSens(VNH_HANDLE* hVNH){
 	HAL_GPIO_WritePin(hVNH->CS_dis_sig.gpioport,hVNH->CS_dis_sig.gpiopin,GPIO_PIN_RESET);
 }
 
-uint32_t VNH_GetCurValue(VNH_HANDLE* hVNH){
+float VNH_GetCurValue(VNH_HANDLE* hVNH){
 
 	return (uint32_t)(*hVNH->CS_sig/hVNH->CS_Rez_Val);
 }

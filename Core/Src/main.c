@@ -109,62 +109,22 @@ int main(void)
   MX_TIM2_Init();
 
   /* USER CODE BEGIN 2 */
-
-  HAL_ADCEx_Calibration_Start(&hadc1,ADC_SINGLE_ENDED);
-
-
-  HAL_Delay(100);
-
-
-  HAL_GPIO_WritePin(M2_ENA_GPIO_Port,M2_ENA_Pin,GPIO_PIN_SET);
-  HAL_GPIO_WritePin(M1_ENA_GPIO_Port,M1_ENA_Pin, GPIO_PIN_SET);
-
-  HAL_GPIO_WritePin( M2_INA_GPIO_Port,M2_INA_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(M2_INB_GPIO_Port,M2_INB_Pin, GPIO_PIN_RESET);
-
-  HAL_GPIO_WritePin( M1_INA_GPIO_Port,M1_INA_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(M1_INB_GPIO_Port,M1_INB_Pin, GPIO_PIN_RESET);
-
-  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_4);
-
-  HAL_TIM_PWM_Start(&htim17, TIM_CHANNEL_1);
-
-  __HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_4,0);
-  __HAL_TIM_SET_COMPARE(&htim17,TIM_CHANNEL_1,0);
-
-
+  Motors_Init();
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
-  HAL_Delay(1000);
+  VNH_SetPWM(&hVNH2, 50);
+  VNH_SetDirLH(&hVNH2);
+  VNH_Enable(&hVNH2);
 
 
-  HAL_Delay(1000);
 
-  HAL_Delay(1500);
-  HAL_ADC_Start_DMA(&hadc1,adc_dma_buffer,2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  HAL_GPIO_WritePin( M2_INA_GPIO_Port,M2_INA_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(M2_INB_GPIO_Port,M2_INB_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin( M1_INA_GPIO_Port,M1_INA_Pin, GPIO_PIN_RESET);
-  HAL_GPIO_WritePin(M1_INB_GPIO_Port,M1_INB_Pin, GPIO_PIN_SET);
   while (1)
   {
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
-	  //da=__HAL_TIM_GET_COMPARE(&htim3,TIM_CHANNEL_1);
-	  db= __HAL_TIM_GET_COUNTER(&htim3);
-	  if (db<0)  db=0;
-	  {
-	  __HAL_TIM_SET_COMPARE(&htim2,TIM_CHANNEL_4,db*1);
-
-	  }
-
-
-
-
 
 
   }

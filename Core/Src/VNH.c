@@ -67,13 +67,17 @@ void Motors_Init(void){
 		HAL_Delay(1);
 	}
 
-	HAL_ADC_Start_DMA(&hadc1,adc_dma_buffer,2);
+	//HAL_ADC_Start_DMA(&hadc1,adc_dma_buffer,2);
 
 
 	hVNH1.CS_sig=&adc_dma_buffer[0];
 	hVNH2.CS_sig=&adc_dma_buffer[1];
 
+	hVNH1.CS_Rez_Val=12000;
+	hVNH2.CS_Rez_Val=12000;
 
+	VNH_Init(&hVNH1);
+	VNH_Init(&hVNH2);
 
 
 }

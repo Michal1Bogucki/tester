@@ -54,6 +54,6 @@ void VNH_DisableCurSens(VNH_HANDLE*);
 
 void VNH_EnableCurSens(VNH_HANDLE*);
 
-uint32_t VNH_GetCurValu(VNH_HANDLE*);
+float VNH_GetCurValu(VNH_HANDLE*);
 
 #endif /* INC_VNH5019_DRV_H_ */
