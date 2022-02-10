@@ -99,8 +99,8 @@ void VNH_SetDir(VNH_HANDLE* hVNH ,VNH_dir dir){
 }
 
 void VNH_SetPWM(VNH_HANDLE* hVNH, uint8_t duty){
-
-	hVNH->PWM_dutycicle=duty;
+	if (duty>100) duty=100;
+ 	hVNH->PWM_dutycicle=duty;
 	 __HAL_TIM_SET_COMPARE(hVNH->PWM_sig.timh,hVNH->PWM_sig.Chanel,__HAL_TIM_GET_AUTORELOAD(hVNH->PWM_sig.timh)*duty/0xff);
 }
 

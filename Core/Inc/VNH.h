@@ -20,6 +20,8 @@ extern uint32_t adc_dma_buffer[2];
 
 void Motors_Init(void);
 
+void Motor_test(VNH_HANDLE*);
+
 
 
 #endif /* INC_VNH_H_ */

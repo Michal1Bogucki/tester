@@ -111,12 +111,9 @@ int main(void)
   /* USER CODE BEGIN 2 */
   Motors_Init();
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
-  VNH_SetPWM(&hVNH2, 50);
-  VNH_SetDirLH(&hVNH2);
-  VNH_Enable(&hVNH2);
 
-
-
+  Motor_test(&hVNH1);
+  Motor_test(&hVNH2);
   /* USER CODE END 2 */
 
   /* Infinite loop */

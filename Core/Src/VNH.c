@@ -81,3 +81,49 @@ void Motors_Init(void){
 
 
 }
+void Motor_test(VNH_HANDLE* hVNH){
+	
+  VNH_SetPWM(&hVNH, 50);
+  VNH_SetDirLH(&hVNH);
+  VNH_Enable(&hVNH);
+  HAL_Delay(500);
+  VNH_TogleDir(&hVNH);
+  HAL_Delay(500);
+  VNH_TogleDir(&hVNH);
+  HAL_Delay(500);
+  VNH_Disable(&hVNH);
+  HAL_Delay(500);
+  VNH_Enable(&hVNH);
+  HAL_Delay(500);
+  VNH_SetPWM(&hVNH, 10);
+  HAL_Delay(500);
+  VNH_SetPWM(&hVNH, 20);
+  HAL_Delay(500);
+  VNH_SetPWM(&hVNH, 30);
+  HAL_Delay(500);
+  VNH_SetPWM(&hVNH, 40);
+  HAL_Delay(500);
+  VNH_SetPWM(&hVNH, 50);
+  HAL_Delay(500);
+  VNH_SetPWM(&hVNH, 60);
+  HAL_Delay(500);
+  VNH_SetPWM(&hVNH, 70);
+  HAL_Delay(500);
+  VNH_SetPWM(&hVNH, 80);
+  HAL_Delay(500);
+  VNH_SetPWM(&hVNH, 90);
+  HAL_Delay(500);
+  VNH_SetPWM(&hVNH, 100);
+  HAL_Delay(500);
+  VNH_SetDir(&hVNH,dir_HH);
+  HAL_Delay(500);
+  VNH_SetDir(&hVNH,dir_HL);
+  HAL_Delay(500);
+  VNH_SetDir(&hVNH,dir_LL);
+  HAL_Delay(500);
+  VNH_SetDir(&hVNH,dir_LH);
+  VNH_Disable(&hVNH);
+
+
+
+}
