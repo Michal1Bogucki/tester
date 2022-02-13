@@ -112,8 +112,18 @@ int main(void)
   Motors_Init();
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
 
-  Motor_test(&hVNH1);
+
+  //Motor_test(&hVNH1);
+	HAL_ADCEx_Calibration_Start(&hadc1,ADC_SINGLE_ENDED);
+	while (HAL_IS_BIT_SET(HAL_ADC_GetState(&hadc1), HAL_ADC_STATE_BUSY_INTERNAL)){
+		HAL_Delay(1);
+	}
+	HAL_ADC_Start_DMA(&hadc1,adc_dma_buffer,2);
   Motor_test(&hVNH2);
+
+
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

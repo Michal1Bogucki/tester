@@ -16,6 +16,8 @@ typedef enum{
 	dir_LL
 }VNH_dir;
 
+
+
 typedef struct{
 PRIM_PWM PWM_sig;
 PRIM_IOPIN MA_sig;
@@ -29,6 +31,7 @@ uint16_t CS_Rez_Val;
 VNH_dir dir;
 
 uint8_t PWM_dutycicle;
+uint8_t pol_reverse;
 
 }VNH_HANDLE;
 
@@ -37,11 +40,11 @@ void VNH_Init(VNH_HANDLE*);
 void VNH_Enable(VNH_HANDLE*);
 void VNH_Disable(VNH_HANDLE*);
 
-void VNH_SetDirHL(VNH_HANDLE*);
-void VNH_SetDirLH(VNH_HANDLE*);
+void VNH_SetIOHL(VNH_HANDLE*);
+void VNH_SetIOLH(VNH_HANDLE*);
 
-void VNH_SetDirHH(VNH_HANDLE*);
-void VNH_SetDirLL(VNH_HANDLE*);
+void VNH_SetIOHH(VNH_HANDLE*);
+void VNH_SetIOLL(VNH_HANDLE*);
 void VNH_TogleDir(VNH_HANDLE*);
 
 void VNH_SetDir(VNH_HANDLE*,VNH_dir);
@@ -55,5 +58,7 @@ void VNH_DisableCurSens(VNH_HANDLE*);
 void VNH_EnableCurSens(VNH_HANDLE*);
 
 float VNH_GetCurValu(VNH_HANDLE*);
+
+void VNH_Reverse_pol(VNH_HANDLE*);
 
 #endif /* INC_VNH5019_DRV_H_ */

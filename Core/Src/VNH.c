@@ -62,10 +62,7 @@ void Motors_Init(void){
 	hVNH2.PWM_sig=PWMpin;
 
 	//ADC SET
-	HAL_ADCEx_Calibration_Start(&hadc1,ADC_SINGLE_ENDED);
-	while (HAL_IS_BIT_SET(HAL_ADC_GetState(&hadc1), HAL_ADC_STATE_BUSY_INTERNAL)){
-		HAL_Delay(1);
-	}
+
 
 	//HAL_ADC_Start_DMA(&hadc1,adc_dma_buffer,2);
 
@@ -82,47 +79,59 @@ void Motors_Init(void){
 
 }
 void Motor_test(VNH_HANDLE* hVNH){
-	
-  VNH_SetPWM(&hVNH, 50);
-  VNH_SetDirLH(&hVNH);
-  VNH_Enable(&hVNH);
-  HAL_Delay(500);
-  VNH_TogleDir(&hVNH);
-  HAL_Delay(500);
-  VNH_TogleDir(&hVNH);
-  HAL_Delay(500);
-  VNH_Disable(&hVNH);
-  HAL_Delay(500);
-  VNH_Enable(&hVNH);
-  HAL_Delay(500);
-  VNH_SetPWM(&hVNH, 10);
-  HAL_Delay(500);
-  VNH_SetPWM(&hVNH, 20);
-  HAL_Delay(500);
-  VNH_SetPWM(&hVNH, 30);
-  HAL_Delay(500);
-  VNH_SetPWM(&hVNH, 40);
-  HAL_Delay(500);
-  VNH_SetPWM(&hVNH, 50);
-  HAL_Delay(500);
-  VNH_SetPWM(&hVNH, 60);
-  HAL_Delay(500);
-  VNH_SetPWM(&hVNH, 70);
-  HAL_Delay(500);
-  VNH_SetPWM(&hVNH, 80);
-  HAL_Delay(500);
-  VNH_SetPWM(&hVNH, 90);
-  HAL_Delay(500);
-  VNH_SetPWM(&hVNH, 100);
-  HAL_Delay(500);
-  VNH_SetDir(&hVNH,dir_HH);
-  HAL_Delay(500);
-  VNH_SetDir(&hVNH,dir_HL);
-  HAL_Delay(500);
-  VNH_SetDir(&hVNH,dir_LL);
-  HAL_Delay(500);
-  VNH_SetDir(&hVNH,dir_LH);
-  VNH_Disable(&hVNH);
+
+uint32_t t=1000;
+  VNH_SetPWM(hVNH, 20);
+  VNH_SetDir(hVNH,dir_HL);
+  VNH_Enable(hVNH);
+  HAL_Delay(t);
+  VNH_TogleDir(hVNH);
+  HAL_Delay(t);
+  VNH_TogleDir(hVNH);
+  HAL_Delay(t);
+  VNH_Disable(hVNH);
+  HAL_Delay(t);
+  VNH_Enable(hVNH);
+  HAL_Delay(t);
+  VNH_SetPWM(hVNH, 10);
+  HAL_Delay(t);
+  VNH_SetPWM(hVNH, 20);
+  HAL_Delay(t);
+  VNH_SetPWM(hVNH, 30);
+  HAL_Delay(t);
+  VNH_SetPWM(hVNH, 40);
+  HAL_Delay(t);
+  VNH_SetPWM(hVNH, 50);
+  HAL_Delay(t);
+  VNH_SetPWM(hVNH, 60);
+  HAL_Delay(t);
+  VNH_SetPWM(hVNH, 70);
+  HAL_Delay(t);
+  VNH_SetPWM(hVNH, 80);
+  HAL_Delay(t);
+  VNH_SetPWM(hVNH, 90);
+  HAL_Delay(t);
+  VNH_SetPWM(hVNH, 100);
+  HAL_Delay(t);
+
+  VNH_SetPWM(hVNH, 20);
+   HAL_Delay(t);
+  VNH_SetDir(hVNH,dir_HH);
+  HAL_Delay(t);
+  VNH_SetDir(hVNH,dir_HL);
+  HAL_Delay(t);
+  VNH_SetDir(hVNH,dir_LL);
+  HAL_Delay(t);
+  VNH_SetDir(hVNH,dir_LH);
+  HAL_Delay(t);
+
+  VNH_Reverse_pol(hVNH);
+  HAL_Delay(t);
+  VNH_SetDir(hVNH,dir_HL);
+  HAL_Delay(t);
+  VNH_SetDir(hVNH,dir_LH);
+  HAL_Delay(t);
+  VNH_Disable(hVNH);
 
 
 
