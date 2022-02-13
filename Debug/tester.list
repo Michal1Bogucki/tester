@@ -2189,7 +2189,6 @@ int main(void)
  8000ee8:	f000 f9f2 	bl	80012d0 <MX_TIM17_Init>
   MX_TIM2_Init();
  8000eec:	f000 f924 	bl	8001138 <MX_TIM2_Init>
-
   /* USER CODE BEGIN 2 */
   Motors_Init();
  8000ef0:	f7ff f96a 	bl	80001c8 <Motors_Init>
@@ -2338,8 +2337,8 @@ void SystemClock_Config(void)
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2C1|RCC_PERIPHCLK_ADC12;
  8000fcc:	23a0      	movs	r3, #160	; 0xa0
  8000fce:	607b      	str	r3, [r7, #4]
-  PeriphClkInit.Adc12ClockSelection = RCC_ADC12PLLCLK_DIV1;
- 8000fd0:	f44f 7380 	mov.w	r3, #256	; 0x100
+  PeriphClkInit.Adc12ClockSelection = RCC_ADC12PLLCLK_DIV32;
+ 8000fd0:	f44f 73c0 	mov.w	r3, #384	; 0x180
  8000fd4:	617b      	str	r3, [r7, #20]
   PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_HSI;
  8000fd6:	2300      	movs	r3, #0

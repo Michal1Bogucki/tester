@@ -107,7 +107,6 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM17_Init();
   MX_TIM2_Init();
-
   /* USER CODE BEGIN 2 */
   Motors_Init();
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
@@ -131,6 +130,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
 
 
@@ -175,7 +175,7 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2C1|RCC_PERIPHCLK_ADC12;
-  PeriphClkInit.Adc12ClockSelection = RCC_ADC12PLLCLK_DIV1;
+  PeriphClkInit.Adc12ClockSelection = RCC_ADC12PLLCLK_DIV32;
   PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_HSI;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
