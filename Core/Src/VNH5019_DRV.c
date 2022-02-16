@@ -40,7 +40,7 @@ void VNH_Disable(VNH_HANDLE* hVNH){
 }
 
 void VNH_Enable(VNH_HANDLE* hVNH){
-	HAL_GPIO_WritePin(hVNH->ENA_sig.gpioport, hVNH->ENA_sig.gpiopin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(hVNH->ENA_sig.gpioport, hVNH->ENA_sig.gpiopin, GPIO_PIN_SET);
 	VNH_SetDir(hVNH,hVNH->dir);
 }
 
@@ -95,7 +95,7 @@ void VNH_TogleDir(VNH_HANDLE* hVNH){
 }
 
 void VNH_SetDir(VNH_HANDLE* hVNH ,VNH_dir dir){
-	if (hVNH->pol_reverse){
+	if (!hVNH->pol_reverse){
 		switch(dir){
 		case dir_HL:
 			VNH_SetIOHL(hVNH);

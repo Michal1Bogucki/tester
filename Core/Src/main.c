@@ -94,7 +94,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  HAL_Delay(500);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -113,13 +113,14 @@ int main(void)
 
 
   //Motor_test(&hVNH1);
-	HAL_ADCEx_Calibration_Start(&hadc1,ADC_SINGLE_ENDED);
+  HAL_ADCEx_Calibration_Start(&hadc1,ADC_SINGLE_ENDED);
 	while (HAL_IS_BIT_SET(HAL_ADC_GetState(&hadc1), HAL_ADC_STATE_BUSY_INTERNAL)){
 		HAL_Delay(1);
 	}
 	HAL_ADC_Start_DMA(&hadc1,adc_dma_buffer,2);
-  Motor_test(&hVNH2);
 
+	Motor_test(&hVNH2);
+	Motor_test(&hVNH1);
 
 
 

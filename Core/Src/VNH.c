@@ -83,6 +83,7 @@ void Motor_test(VNH_HANDLE* hVNH){
 uint32_t t=1000;
   VNH_SetPWM(hVNH, 20);
   VNH_SetDir(hVNH,dir_HL);
+  VNH_EnableCurSens(hVNH);
   VNH_Enable(hVNH);
   HAL_Delay(t);
   VNH_TogleDir(hVNH);
