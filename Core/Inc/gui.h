@@ -30,7 +30,7 @@ typedef struct{
 	GUI_SCREEN_STATE_def Current_Screen;
 	uint16_t  cusor_pos;
 	GUI_EVENT_def Last_Event;
-}GUI_Handle;
+}GUI_Handler;
 
 void GUI_INIT(GUI_Handle*);
 

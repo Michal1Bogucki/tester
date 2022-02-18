@@ -12,7 +12,7 @@
 
 
 
-void GUI_INIT(GUI_Handle* _gui_handle){
+void GUI_INIT(GUI_Handler* _gui_handle){
 	_gui_handle->Current_Screen=GUI_STATE_START;
 	_gui_handle->Last_Event=GUI_EVENT_IDLE;
 	_gui_handle->cusor_pos=0;
