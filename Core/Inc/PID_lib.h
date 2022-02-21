@@ -52,7 +52,7 @@ typedef struct{
 	float I_mini;
 
 	float lasttime; //!< Stores the time when the control loop ran last time
-	uint32_t sampletime; //!< Defines the PID sample time
+	float sampletime; //!< Defines the PID sample time
 	PID_status status;
 	PID_mode mode;
 

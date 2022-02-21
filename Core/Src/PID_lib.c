@@ -21,7 +21,7 @@ void pid_Init(PID_handler* hPID, float kp, float ki, float kd)
 {
 
 	if (hPID->input==0||hPID->output==0) return;
-
+	hPID->status=PID_Disable;
 
 	pid_out_limits(hPID,hPID->omin ,hPID->omax);
 	pid_I_limits(hPID,hPID->I_max,hPID->I_mini);
@@ -57,7 +57,7 @@ void pid_compute(PID_handler* hPID)
 		float pid_error = (*(hPID->setpoint))-(*(hPID->input));
 		float prop= pid_error*hPID->Kp;
 
-		hPID->I_accum=(pid_error)*hPID->sampletime;
+		hPID->I_accum=hPID->I_accum+(pid_error)*hPID->sampletime;
 		if (hPID->I_accum>hPID->I_max) hPID->I_accum=hPID->I_max;
 		if (hPID->I_accum<hPID->I_mini) hPID->I_accum=hPID->I_mini;
 		float integr = hPID->I_accum*hPID->Ki;
@@ -65,9 +65,13 @@ void pid_compute(PID_handler* hPID)
 		float deriv=(*(hPID->input)-hPID->D_last)*hPID->Kp;
 		hPID->D_last=*hPID->input;
 
-		float out= prop+integr+deriv;
+		float out= prop+integr-deriv;
 		if (out>hPID->omax) out=hPID->omax;
-		if (out<hPID->omin) out=hPID->omin;
+		if (out<hPID->omin){
+			out=hPID->omin;
+		}
+
+
 
 		*hPID->output=out;
 
@@ -126,7 +130,9 @@ void pid_I_limits(PID_handler* pid, float min, float max)
 			pid->I_accum = pid->I_mini;
 }
 
-
+void pid_Enable(PID_handler* h ){
+	h->status=PID_PreCompute;
+}
 
 
 __attribute__((weak)) uint32_t pid_get_tick(){
