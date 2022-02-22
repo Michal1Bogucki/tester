@@ -34,6 +34,7 @@
 
 #include "gui.h"
 #include "VNH.h"
+#include "pid_config.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -107,6 +108,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM17_Init();
   MX_TIM2_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
   Motors_Init();
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
@@ -119,9 +121,15 @@ int main(void)
 	}
 	HAL_ADC_Start_DMA(&hadc1,adc_dma_buffer,2);
 
-	Motor_test(&hVNH2);
-	Motor_test(&hVNH1);
-
+	//Motor_test(&hVNH2);
+	//Motor_test(&hVNH1);
+	def_pid_1();
+	pid_Enable(&PIDh1);
+	HAL_TIM_Base_Start_IT(&htim6);
+	VNH_SetDir(&hVNH1,dir_HL);
+	VNH_Enable(&hVNH1);
+	VNH_EnableCurSens(&hVNH1);
+	//test_pid(&PIDh1);
 
 
   /* USER CODE END 2 */
@@ -185,7 +193,17 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	if (htim==&htim6){
 
+		*PIDh1.input=(float)*hVNH1.CS_sig;
+
+		pid_compute(&PIDh1);
+
+		VNH_SetPWM(&hVNH1,(float)*PIDh1.output);
+
+	}
+}
 /* USER CODE END 4 */
 
 /**

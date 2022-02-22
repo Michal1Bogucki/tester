@@ -1,4 +1,5 @@
 "Core/Src/GFX.o"
+"Core/Src/PID_lib.o"
 "Core/Src/SSD1306.o"
 "Core/Src/VNH.o"
 "Core/Src/VNH5019_DRV.o"
@@ -9,6 +10,7 @@
 "Core/Src/gui.o"
 "Core/Src/i2c.o"
 "Core/Src/main.o"
+"Core/Src/pid_config.o"
 "Core/Src/stm32f3xx_hal_msp.o"
 "Core/Src/stm32f3xx_it.o"
 "Core/Src/syscalls.o"
