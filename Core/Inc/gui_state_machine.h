@@ -4,6 +4,17 @@
 
 #define _number_of_states_ 10;
 
+typedef enum{
+    Enc_decrement,
+    Enc_increment,
+    Button_push,
+    Button_release,
+    Data_in,
+    Timer_tick,
+    Draw_request,
+    Events_number_
+}Event_name;
+
 typedef struct{
 
 
@@ -17,28 +28,23 @@ uint32_t states_counter,
 void (*_state_activation[_number_of_states_])(State_handler*),
 
 
-void (*_event_process)(void); 
+void (*_event_proces[Events_number_])(void); 
 
 
 
 }SMhadler;
 
+
+
+
 typedef struct{
-void ()
+Event_name _Event_name,
+void (*_event_proces)(void)=0; 
 
 
 }State_handler;
 
-typedef enum{
-    Enc_decrement,
-    Enc_increment,
-    Button_push,
-    Button_release,
-    Data_in,
-    Timer_tick,
-    Drwa_reguest,
-    Events_cumber_,
-}Event_name;
+
 
 void initSM(SMhandler*);
 void addState(SMhandler*,State_handler);
