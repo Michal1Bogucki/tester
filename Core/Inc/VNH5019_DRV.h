@@ -33,6 +33,9 @@ VNH_dir dir;
 uint8_t PWM_dutycicle;
 uint8_t pol_reverse;
 
+uint32_t LH_ZeroCorection;
+uint32_t HL_ZeroCorection;
+
 }VNH_HANDLE;
 
 void VNH_Init(VNH_HANDLE*);
@@ -55,9 +58,13 @@ void VNH_SetPWM(VNH_HANDLE*, uint8_t);
 
 void VNH_DisableCurSens(VNH_HANDLE*);
 
+void VNH_CurSensZeroCorrection(VNH_HANDLE*);
+
 void VNH_EnableCurSens(VNH_HANDLE*);
 
-float VNH_GetCurValu(VNH_HANDLE*);
+float VNH_GetCurValue(VNH_HANDLE*);
+
+void VNH_ZeroPointCorrection(VNH_HANDLE*);
 
 void VNH_Reverse_pol(VNH_HANDLE*);
 

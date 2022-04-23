@@ -70,8 +70,8 @@ void Motors_Init(void){
 	hVNH1.CS_sig=&adc_dma_buffer[0];
 	hVNH2.CS_sig=&adc_dma_buffer[1];
 
-	hVNH1.CS_Rez_Val=12000;
-	hVNH2.CS_Rez_Val=12000;
+	hVNH1.CS_Rez_Val=3900;
+	hVNH2.CS_Rez_Val=3900;
 
 	VNH_Init(&hVNH1);
 	VNH_Init(&hVNH2);

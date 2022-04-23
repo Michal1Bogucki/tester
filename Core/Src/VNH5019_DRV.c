@@ -25,7 +25,7 @@ void VNH_Init(VNH_HANDLE* hVNH){
 	VNH_Disable(hVNH);
 	HAL_TIM_PWM_Start(hVNH->PWM_sig.timh,hVNH->PWM_sig.Chanel);
 	VNH_SetPWM(hVNH,0);
-
+	VNH_ZeroPointCorrection(hVNH);
 	VNH_SetDir(hVNH,dir_LL);
 
 
@@ -175,8 +175,59 @@ void VNH_EnableCurSens(VNH_HANDLE* hVNH){
 
 	HAL_GPIO_WritePin(hVNH->CS_dis_sig.gpioport,hVNH->CS_dis_sig.gpiopin,GPIO_PIN_RESET);
 }
+void VNH_ZeroPointCorrection(VNH_HANDLE* hVNH){
+
+	VNH_Disable(hVNH);
+	VNH_EnableCurSens(hVNH);
+
+	VNH_SetDir(hVNH, dir_HL);
+	HAL_Delay(2000);
+	VNH_SetDir(hVNH, dir_LH);
+	HAL_Delay(2000);
+	VNH_SetDir(hVNH, dir_HL);
+
+	uint32_t a=0;
+	HAL_Delay(80);
+	for(int i=0;i<10;i++){
+		a+=(*hVNH->CS_sig);
+		HAL_Delay(80);
+	}
+	hVNH->HL_ZeroCorection=(uint32_t)(a/10);
+	a=0;
+	VNH_SetDir(hVNH, dir_LH);
+	HAL_Delay(100);
+	for(int i=0;i<10;i++){
+		a+=(*hVNH->CS_sig);
+		HAL_Delay(80);
+	}
+	hVNH->LH_ZeroCorection=(uint32_t)(a/10);
+
+	VNH_SetDir(hVNH, dir_LL);
+
+}
+
+
 
 float VNH_GetCurValue(VNH_HANDLE* hVNH){
 
-	return (uint32_t)(*hVNH->CS_sig/hVNH->CS_Rez_Val);
+
+	float current=0;
+
+
+	int32_t a;
+	if(hVNH->dir==dir_HL){
+		a=(*hVNH->CS_sig)-hVNH->HL_ZeroCorection;
+		if(a<0) a=0;
+	current = ((float)(3.3*(float)a)/4096)/((float)hVNH->CS_Rez_Val);
+	}
+
+	if(hVNH->dir==dir_LH){
+		a=(*hVNH->CS_sig)-hVNH->LH_ZeroCorection;
+		if(a<0) a=0;
+		current = ((float)(3.3*(float)a)/4096)/((float)hVNH->CS_Rez_Val);
+	}
+
+
+
+	return current;
 }

@@ -57,7 +57,7 @@
 volatile  char a[]="sss";
 uint32_t da;
 uint32_t db;
-
+float cur;
 
 /* USER CODE END PV */
 
@@ -110,7 +110,7 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
-  Motors_Init();
+
   HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
 
 
@@ -120,26 +120,44 @@ int main(void)
 		HAL_Delay(1);
 	}
 	HAL_ADC_Start_DMA(&hadc1,adc_dma_buffer,2);
-
+	Motors_Init();
 	//Motor_test(&hVNH2);
 	//Motor_test(&hVNH1);
 	def_pid_1();
+	def_pid_2();
 	pid_Enable(&PIDh1);
+	pid_Enable(&PIDh2);
 	HAL_TIM_Base_Start_IT(&htim6);
 	VNH_SetDir(&hVNH1,dir_HL);
 	VNH_Enable(&hVNH1);
 	VNH_EnableCurSens(&hVNH1);
+
+	VNH_SetDir(&hVNH2,dir_HL);
+	VNH_Enable(&hVNH2);
+	VNH_EnableCurSens(&hVNH2);
 	//test_pid(&PIDh1);
 
-
+	int a =0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
   while (1)
   {
     /* USER CODE END WHILE */
+	  cur=VNH_GetCurValue(&hVNH2);
+	  pid1_setpoint= htim3.Instance->CNT;
 
+	  pid2_setpoint= htim3.Instance->CNT;
+
+	  HAL_Delay(100);
+	  a++;
+	  if (a>100){
+		  a=0;
+		 VNH_TogleDir(&hVNH1);
+		 VNH_TogleDir(&hVNH2);
+	  }
     /* USER CODE BEGIN 3 */
 
 
@@ -197,11 +215,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if (htim==&htim6){
 
 		*PIDh1.input=(float)*hVNH1.CS_sig;
+		*PIDh2.input=(float)*hVNH2.CS_sig;
 
 		pid_compute(&PIDh1);
-
+		pid_compute(&PIDh2);
 		VNH_SetPWM(&hVNH1,(float)*PIDh1.output);
-
+		VNH_SetPWM(&hVNH2,(float)*PIDh2.output);
 	}
 }
 /* USER CODE END 4 */
